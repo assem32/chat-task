@@ -1,10 +1,14 @@
+import 'package:chat_task/core/api_service.dart';
 import 'package:chat_task/core/color_manger.dart';
+import 'package:chat_task/core/firebase_notifcation.dart';
+import 'package:chat_task/data/repo/home_repo_implement.dart';
 import 'package:chat_task/manger/login/login_cubit.dart';
 import 'package:chat_task/manger/login/login_states.dart';
 import 'package:chat_task/presintation/home_page/home_view.dart';
 import 'package:chat_task/presintation/login/widgets/textfield_login.dart';
 import 'package:chat_task/presintation/main_layout/main_layout.dart';
 import 'package:chat_task/presintation/register/register_view.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +23,9 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return BlocProvider(
-      create: (BuildContext context)=>LoginCubit(),
+      create: (BuildContext context)=>LoginCubit(
+        
+      ),
       child: BlocConsumer<LoginCubit,LoginStates>(
         listener: (context,state){
           if(state is SuccessLoginState){
@@ -37,16 +43,18 @@ class LoginView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFormFiledDefault(controller: mail,label: 'E-mail',type: TextInputType.emailAddress,validateMessage: 'Mail is empty'),
+                TextFormFiledDefault(controller: mail,label: 'E-mail',type: TextInputType.emailAddress,validateMessage: 'Mail is empty',show: false,),
                 SizedBox(
                   height: 20,
                 ),
-                TextFormFiledDefault(controller: password,label: 'Password',type: TextInputType.text,validateMessage: 'Password empty'),
+                TextFormFiledDefault(controller: password,label: 'Password',type: TextInputType.text,validateMessage: 'Password empty',show: true,),
                 SizedBox(
                   height: 20,
                 ),
-                ElevatedButton(onPressed: (){
+                ElevatedButton(onPressed: ()async{
+                 
                   if (_formKey.currentState!.validate()) {
+                    
                     LoginCubit.get(context).userLogin(mail: mail.text, pass: password.text);
                             }
                 },

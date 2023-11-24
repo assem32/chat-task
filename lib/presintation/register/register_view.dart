@@ -1,4 +1,5 @@
 import 'package:chat_task/core/color_manger.dart';
+import 'package:chat_task/core/firebase_notifcation.dart';
 import 'package:chat_task/manger/register/register_cubit.dart';
 import 'package:chat_task/manger/register/register_state.dart';
 import 'package:chat_task/presintation/login/widgets/textfield_login.dart';
@@ -35,18 +36,20 @@ class RegisterView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFormFiledDefault(controller: name,label: 'Name',type: TextInputType.emailAddress,validateMessage: 'Name is empty'),
+                TextFormFiledDefault(controller: name,label: 'Name',type: TextInputType.emailAddress,validateMessage: 'Name is empty',show: false,),
                 SizedBox(height: 20,),
-                TextFormFiledDefault(controller: phone,label: 'Phone',type: TextInputType.phone,validateMessage: 'phone empty'),
+                TextFormFiledDefault(controller: phone,label: 'Phone',type: TextInputType.phone,validateMessage: 'phone empty',show: false,),
                 SizedBox(height: 20,),
-                TextFormFiledDefault(controller: mail,label: 'E-mail',type: TextInputType.emailAddress,validateMessage: 'Mail is empty'),
+                TextFormFiledDefault(controller: mail,label: 'E-mail',type: TextInputType.emailAddress,validateMessage: 'Mail is empty',show: false,),
                 SizedBox(height: 20,),
-                TextFormFiledDefault(controller: password,label: 'Password',type: TextInputType.text,validateMessage: 'Password empty'),
+                TextFormFiledDefault(controller: password,label: 'Password',type: TextInputType.text,validateMessage: 'Password empty',show: true,),
                 SizedBox(height: 20,),
                 
-                ElevatedButton(onPressed: (){
+                ElevatedButton(onPressed: ()async{
                   if (_formKey.currentState!.validate()) {
-                    RegisterCubit.get(context).userRegister(name: name.text, mail: mail.text, phone: phone.text,pass: password.text);
+                    String? token= await FirebaseAPI().initNotification();
+                 print('mnmnm$token');
+                    RegisterCubit.get(context).userRegister(name: name.text, mail: mail.text, phone: phone.text,pass: password.text,token: token.toString());
                             }
                 },
                  child: Text('Register',style: TextStyle(color: Colors.white),),

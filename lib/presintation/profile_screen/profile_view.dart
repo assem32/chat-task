@@ -25,9 +25,9 @@ class ProfileView extends StatelessWidget {
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextFormFiledDefault(controller: name,label: 'Name',type: TextInputType.emailAddress,validateMessage: 'Name is empty'),
+              TextFormFiledDefault(controller: name,label: 'Name',type: TextInputType.emailAddress,validateMessage: 'Name is empty',show: false,),
               SizedBox(height: 20,),
-              TextFormFiledDefault(controller: phone,label: 'Phone',type: TextInputType.phone,validateMessage: 'phone empty'),
+              TextFormFiledDefault(controller: phone,label: 'Phone',type: TextInputType.phone,validateMessage: 'phone empty',show: false,),
               SizedBox(
                 height: 20,
               ),

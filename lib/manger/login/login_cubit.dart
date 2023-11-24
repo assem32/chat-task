@@ -1,5 +1,6 @@
 import 'package:chat_task/core/constants.dart';
 import 'package:chat_task/data/models/user_model.dart';
+import 'package:chat_task/data/repo/home_repo.dart';
 import 'package:chat_task/manger/login/login_states.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -9,6 +10,7 @@ UserModel? currentUser;
 
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(InitialLoginState());
+
   static LoginCubit get(context)=>BlocProvider.of(context);
 
     DatabaseReference ref1 = FirebaseDatabase.instance.ref();
@@ -27,7 +29,12 @@ class LoginCubit extends Cubit<LoginStates> {
       Map<dynamic, dynamic> data = event.snapshot.value as Map<dynamic, dynamic>;
         currentUser = UserModel.fromJson(data);
           
+    //     var result = await homeRepo.makeNotification();
+    //     result.fold((failure) {
 
+    // }, (books) {
+    //   print('boook$books');
+    // });
 
       print(userCredential.user!.uid);
       // print(userCredential.user.);

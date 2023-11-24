@@ -16,13 +16,14 @@ class RegisterCubit extends Cubit<RegisterStates> {
   required String mail,
   required String pass,
   required String phone,
+  required String token
   })
   {
     emit(RegisterLoadingState());
     FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: mail, password: pass
-    ).then((value){
-      userCreate(name: name, mail: mail, phone: phone, uid: value.user!.uid);
+    ).then((value)async{
+      userCreate(name: name, mail: mail, phone: phone, uid: value.user!.uid,token: token);
 
      emit(RegisterSuccessState());
     }).catchError((error)
@@ -35,13 +36,15 @@ class RegisterCubit extends Cubit<RegisterStates> {
     required String mail,
     required String phone,
     required String uid,
+    required String token
     
 })async{
     ref1.child(USER_REC).child(uid).set({
       'name':name,
       'email':mail,
       'phone':phone,
-      'uid':uid
+      'uid':uid,
+      'token':token
     });
     DatabaseEvent event = await ref1.child(USER_REC).child(uid).once();
 
